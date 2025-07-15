@@ -3,15 +3,15 @@ import { CalendarDaysIcon } from '@heroicons/react/24/outline';
 import { poppins } from '@/app/ui/fonts';
 import { Income } from '@/app/lib/definitions';
 
-export default async function IncomeChart() {
+export default async function IncomeChart({ income }: { income: Income[] }) {
   const chartHeight = 350;
   // Attention! Uncomment this section when you reach this stage in the course.
 
-  // const { yAxisLabels, topLabel } = generateYAxis(income);
+  const { yAxisLabels, topLabel } = generateYAxis(income);
 
-  // if (!income || income.length === 0) {
-  //   return <p className="mt-4 text-gray-400">No data available.</p>;
-  // }
+   if (!income || income.length === 0) {
+    return <p className="mt-4 text-gray-400">No data available.</p>;
+  }
 
   return (
     <div className="w-full md:col-span-4">
