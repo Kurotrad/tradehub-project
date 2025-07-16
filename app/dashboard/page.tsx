@@ -2,11 +2,8 @@ import { Card } from '@/app/ui/dashboard/cards';
 import IncomeChart from '@/app/ui/dashboard/income-chart';
 import LatestInvoices from '@/app/ui/dashboard/latest-invoices';
 import { poppins } from '@/app/ui/fonts';
-import { fetchIncome, fetchLatestInvoices } from '@/app/lib/data';
 
 export default async function Page() {
-    const income = await fetchIncome();
-    const latestInvoices = await fetchLatestInvoices();
   return (
     <main className="rounded-xl bg-neutral-900 p-6">
       <h1
@@ -25,8 +22,8 @@ export default async function Page() {
         {/* <Card title="Total Sellers" value={numberOfSellers} type="sellers" /> */}
       </div>
       <div className="mt-6 grid grid-cols-1 gap-6 md:grid-cols-4 lg:grid-cols-8">
-        <IncomeChart income={income} />
-        <LatestInvoices latestInvoices={latestInvoices} />
+        {/* <IncomeChart income={income} /> */}
+        {/* <LatestInvoices latestInvoices={latestInvoices} /> */}
       </div>
     </main>
   );
