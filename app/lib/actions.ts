@@ -15,6 +15,7 @@ const FormSchema = z.object({
 
 // Define specific schemas for creating invoices
 const CreateInvoice = FormSchema.omit({ id: true, date: true });
+const UpdateInvoice = FormSchema.omit({ id: true, date: true });
 
 import { sql } from '@vercel/postgres';
 
@@ -24,16 +25,29 @@ export async function createInvoice(formData: FormData) {
     amount: formData.get('amount'),
     status: formData.get('status'),
   });
+}
+  export async function updateInvoice(id: string, formData: FormData) {
+  const { sellerId, amount, status } = UpdateInvoice.parse({
+    sellerId: formData.get('sellerId'),
+    amount: formData.get('amount'),
+    status: formData.get('status'),
+  });
 
   const amountInCents = amount * 100;
   const date = new Date().toISOString().split('T')[0];
 
   await sql`
-    INSERT INTO invoices (seller_id, amount, status, date)
-    VALUES (${sellerId}, ${amountInCents}, ${status}, ${date})
+    UPDATE invoices
+    SET seller_id = ${sellerId}, amount = ${amountInCents}, status = ${status}
+    WHERE id = ${id}
   `;
 
   revalidatePath('/dashboard/invoices');
   redirect('/dashboard/invoices');
+}
+
+export async function deleteInvoice(id: string) {
+  await sql`DELETE FROM invoices WHERE id = ${id}`;
+  revalidatePath('/dashboard/invoices');
 }
     
